@@ -9,6 +9,7 @@
   "author": "Eugene Safronov <evgeniy.safronov@outlook.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "request-promise": "^4.2.2"
   }
 }
