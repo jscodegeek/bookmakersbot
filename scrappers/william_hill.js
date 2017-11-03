@@ -22,34 +22,34 @@ rp(URL)
  
     const rows = _.values(dom.window.document.querySelectorAll('.content')[0].querySelectorAll('tr'));
 
-    var score = rows[3].querySelector('b').textContent.trim();
-    var event = rows[4].textContent.trim();
-    var oddWinFirst = rows[5].querySelector('.bold').textContent.trim();
-    var oddDraw = rows[6].querySelector('.bold').textContent.trim();
-    var oddWinSecond = rows[7].querySelector('.bold').textContent.trim();
+    let score = rows[3].querySelector('b').textContent.trim();
+    let event = rows[4].textContent.trim();
+    let oddWinFirst = rows[5].querySelector('.bold').textContent.trim();
+    let oddDraw = rows[6].querySelector('.bold').textContent.trim();
+    let oddWinSecond = rows[7].querySelector('.bold').textContent.trim();
     //console.log(rows[7].querySelector('.bold').textContent.trim());
 
     const result = [];
-    var i = 0;
+    let i = 0;
     while (i < rows.length) {
-        var rowVal = rows[i].textContent.trim()
+        let rowVal = rows[i].textContent.trim()
         if (_.includes(LEAGUES, rowVal)) {
-            var league = rows[i].textContent.trim();
+            let league = rows[i].textContent.trim();
             do {
-                var score = rows[i+2].querySelector('b').textContent.trim();
-                var event = rows[i+3].textContent.trim();
-                var home = event.split(' v ')[0];
-                var away = event.split(' v ')[1];
-                var oddHome = fractionalToDecimal(rows[i+4].querySelector('.bold').textContent.trim());
-                var oddDraw = fractionalToDecimal(rows[i+5].querySelector('.bold').textContent.trim());
-                var oddAway = fractionalToDecimal(rows[i+6].querySelector('.bold').textContent.trim());
-                var match = {league, score, away, home, oddHome, oddDraw, oddAway};
+                let score = rows[i+2].querySelector('b').textContent.trim();
+                let event = rows[i+3].textContent.trim();
+                let home = event.split(' v ')[0];
+                let away = event.split(' v ')[1];
+                let oddHome = fractionalToDecimal(rows[i+4].querySelector('.bold').textContent.trim());
+                let oddDraw = fractionalToDecimal(rows[i+5].querySelector('.bold').textContent.trim());
+                let oddAway = fractionalToDecimal(rows[i+6].querySelector('.bold').textContent.trim());
+                let match = {league, score, away, home, oddHome, oddDraw, oddAway};
                 result.push(match);
                 
                 if ((i+9)<rows.length) {
-                    var isLastMatchInLeague = _.includes(LEAGUES, rows[i+9].textContent.trim());
+                    let isLastMatchInLeague = _.includes(LEAGUES, rows[i+9].textContent.trim());
                 } else {
-                    var isLastMatchInLeague = true;
+                    let isLastMatchInLeague = true;
                 }
 
                 if (isLastMatchInLeague) {
@@ -72,9 +72,9 @@ rp(URL)
 });
 
 const fractionalToDecimal = function (value) {
-    var fract_arr = value.split('/');
-    var dec = _.parseInt((((fract_arr[0]) / (fract_arr[1])) + 1)*100, 10)/100;
-    return dec
+    let fract_arr = value.split('/');
+    let dec = _.parseInt((((fract_arr[0]) / (fract_arr[1])) + 1)*100, 10)/100;
+    return dec;
 }
 
 // module.exports = {

@@ -9,9 +9,11 @@
   "author": "Eugene Safronov <evgeniy.safronov@outlook.com>",
   "license": "ISC",
   "dependencies": {
+    "chromedriver": "^2.33.2",
     "express": "^4.16.2",
     "jsdom": "^11.3.0",
     "lodash": "^4.17.4",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "selenium-webdriver": "^3.6.0"
   }
 }
