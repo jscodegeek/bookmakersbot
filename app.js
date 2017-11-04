@@ -9,6 +9,14 @@
 // })
 
 const paddyPowerScrapper = require('./scrappers/paddy_power');
+const williamHillScrapper = require('./scrappers/william_hill');
+const bet365Scrapper = require('./scrappers/bet365');
 
-paddyPowerScrapper.run()
-  .then(response => console.log(response));
+// paddyPowerScrapper.run()
+//   .then(response => console.log(response));
+
+// williamHillScrapper.run()
+//   .then(response => console.log(response));
+
+bet365Scrapper.run()
+.then(response => console.log(response));

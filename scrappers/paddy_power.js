@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const co = require('co');
 const rp = require('request-promise');
-const hashKey = require('../helpers/hashKey.js');
+const hashKey = require('../helpers/hashKey');
 
 const URL = 'https://sports.paddypower.mobi/tps/live';
 
@@ -37,7 +37,7 @@ const run = co.wrap(function* () {
     
     const end = (new Date()).getTime();
 
-    //console.log('Paddy power time: ', end - start);
+    console.log('Paddy power time: ', end - start);
 
     return result;
   });
