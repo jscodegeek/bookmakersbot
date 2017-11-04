@@ -12,8 +12,12 @@
     "chromedriver": "^2.33.2",
     "express": "^4.16.2",
     "jsdom": "^11.3.0",
+    "levenshtein": "^1.0.5",
     "lodash": "^4.17.4",
+    "node-phantom-promise": "^1.0.3",
+    "phantomjs": "^2.1.7",
     "request-promise": "^4.2.2",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^3.6.0",
+    "sleep-promise": "^2.0.0"
   }
 }

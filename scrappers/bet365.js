@@ -5,57 +5,70 @@ const rp = require('request-promise');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-const URL = 'https://www.bet365.gr/?lng=1&cb=10581203114#/IP/';
+const driver = require('node-phantom-promise');
+const phantomjs = require('phantomjs');
+const sleep = require('sleep-promise');
 
-rp(URL)
-.then((html) => {
+
+const URL = 'https://mobile.bet365.com/#type=InPlay;key=;ip=1;lng=1';
+
+!async function () {
+    const browser = await driver.create({path: phantomjs.path})
+  
+    const page = await browser.createPage()
+  
+    const status = await page.open(URL)
+  
+    //console.log('opened site? ', status)
+  
+
+    await sleep(15000)
+  
+    const result = [];
+    await page.get('content',  (err, html) => {
+        const dom = new JSDOM(html);
+        const rows = dom.window.document.querySelectorAll('.ipo-CompetitionBase:not(.ipo-Competition_EventLink)');
+ 
+
+        _.each(rows, row => {
+            let league = row.querySelector('.ipo-Competition_Name').textContent;
+
+            let events_in_league = row.querySelectorAll('.ipo-Fixture_TimedFixture');
+            _.each(events_in_league, event => {
+                let teams = event.querySelectorAll('.ipo-Fixture_Truncator');
+                let home = teams[0].textContent
+                let away = teams[1].textContent;
+
+                let score_vals = event.querySelectorAll('.ipo-Fixture_PointField ');
+                let score = `${score_vals[0].textContent}-${score_vals[1].textContent}`;
+
+                let odds = event.querySelectorAll('.ipo-Participant_OppOdds');
+                let oddHome = fractionalToDecimal(_.get(odds[0], 'textContent', null))
+                let oddDraw = fractionalToDecimal(_.get(odds[1], 'textContent', null))
+                let oddAway = fractionalToDecimal(_.get(odds[2], 'textContent', null))
+
+                let match = {league, home, away, score, oddHome, oddDraw, oddAway}
+                result.push(match);
+
+            });             
+        });
+        console.log(result);
+        
+
+        browser.exit()
+
+        
+    });
     
-    console.log(html);
-})
-.catch((err) => {
-    console.log(err);
-});
+  }().catch((err) => {
+    console.error(err.stack)
+  });
 
-
-// var webdriver = require('selenium-webdriver');
-// var chrome = require('selenium-webdriver/chrome');
-// var path = require('chromedriver').path;
-
-// var service = new chrome.ServiceBuilder(path).build();
-// chrome.setDefaultService(service);
-
-// var driver = new webdriver.Builder()
-//     .withCapabilities(webdriver.Capabilities.chrome())
-//     .build();
-
-
-// const t = driver.get(URL);
-// console.log(11111);
-// console.log(t);
-
-
-
-// const {Builder, By, Key, until} = require('selenium-webdriver');
-
-// let driver = new Builder()
-//     .forBrowser('chrome')
-//     .build();
-
-// driver.get('http://www.google.com/ncr');
-// driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
-// driver.wait(until.titleIs('webdriver - Google Search'), 1000);
-// driver.quit();
-
-const fractionalToDecimal = function (value) {
-    var fract_arr = value.split('/');
-    var dec = _.parseInt((((fract_arr[0]) / (fract_arr[1])) + 1)*100, 10)/100;
+  const fractionalToDecimal = function (value) {
+    if (!value) return null;
+    let fract_arr = value.split('/');
+    let dec = _.parseInt((((fract_arr[0]) / (fract_arr[1])) + 1)*100, 10)/100;
     return dec;
 }
 
 
-
-
-// module.exports = {
-//     sayHelloInEnglish: function() {
-//       return "HELLO";
-//     },
