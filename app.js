@@ -8,9 +8,7 @@
 //   console.log('BookmakersBot app listening on port 5000!')
 // })
 
-const Levenshtein = require('levenshtein');
+const paddyPowerScrapper = require('./scrappers/paddy_power');
 
-let r = new Levenshtein('Zenit St Peterburg II', 'Zenit 2');
-
-console.log(r.distance);
-console.log(r.valueOf());
+paddyPowerScrapper.run()
+  .then(response => console.log(response));
