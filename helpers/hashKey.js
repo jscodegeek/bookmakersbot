@@ -6,6 +6,6 @@ module.exports = {
         throw new Error('Create hashkey: all params should be here and not null');
     }
 
-    return hash(league + homeTeam + awayTeam);
+    return hash(bookmakerName + league + homeTeam + awayTeam);
   }
 };
